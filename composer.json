@@ -1,0 +1,18 @@
+{
+    "name": "matt/crud",
+    "description": "With the php artisan command, create a basic crud with controller, model, view migration etc",
+    "type": "package",
+    "require": {
+        "laravel/framework": "10"
+    },
+    "autoload": {
+        "psr-4": {
+            "Matt\\Crud\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Matthieu Villalonga"
+        }
+    ]
+}
