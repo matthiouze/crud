@@ -2,8 +2,9 @@
 
 namespace App\Http\Controller;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\{{ $model }}
+use App\Models\{{ $model }};
 
 class {{ $controllerName }} extends Controller
 {
@@ -12,7 +13,7 @@ class {{ $controllerName }} extends Controller
      */
     public function index()
     {
-        return view();
+        return view('{{ $view }}.index');
     }
 
     /**
@@ -20,7 +21,7 @@ class {{ $controllerName }} extends Controller
      */
     public function create()
     {
-        return view();
+        return view('{{ $view }}.create');
     }
 
     /**
@@ -34,23 +35,23 @@ class {{ $controllerName }} extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show({{ $model }} $model)
     {
-        return view();
+        return view('{{ $view }}.show', []);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update({{ $model }} $model, Request $request)
     {
         return redirect()->route();
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete the specified resource from storage.
      */
-    public function delete(string $id)
+    public function delete({{ $model }} $model)
     {
         return redirect()->route();
     }

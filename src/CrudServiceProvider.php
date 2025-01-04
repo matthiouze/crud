@@ -5,7 +5,7 @@ namespace Matt\Crud;
 use Illuminate\Support\ServiceProvider;
 use Matt\Crud\Commands\MakeCrudCommand;
 
-class CrudServiceProvider extends ServiceProvider{
+class CrudServiceProvider extends ServiceProvider {
 
 	public function register()
 	{
