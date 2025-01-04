@@ -1,5 +1,5 @@
 {
-    "name": "matt/crud",
+    "name": "matthiouze/crud",
     "description": "Create a basic crud with php artisan command",
     "type": "package",
     "license": "MIT",
