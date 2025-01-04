@@ -1,0 +1,57 @@
+<?php
+
+namespace App\Http\Controller;
+
+use Illuminate\Http\Request;
+use App\Models\{{ $model }}
+
+class {{ $controllerName }} extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        return view();
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function create()
+    {
+        return view();
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        return redirect()->route();
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        return view();
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        return redirect()->route();
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function delete(string $id)
+    {
+        return redirect()->route();
+    }
+}

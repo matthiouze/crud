@@ -3,6 +3,7 @@
 namespace Matt\Crud\Commands;
 
 use Illuminate\Console\GeneratorCommand;
+use Illuminate\Http\File;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -14,59 +15,55 @@ class MakeCrudCommand extends GeneratorCommand
     protected $type = 'Crud';
 
     /**
-     * Obtenez le nom du fichier de la classe.
-     *
      * @return string
      */
     protected function getStub()
     {
-        // Ici, vous pouvez retourner des stubs personnalisés pour générer les fichiers de manière flexible.
-        return __DIR__ . '/../stubs/crud.stub';
+        return __DIR__ . './stubs/controller.stub';
     }
 
     /**
      * Configurer les options pour la commande.
+     * @return array
      */
     protected function getOptions()
     {
         return [
-            ['controller', null, InputOption::VALUE_REQUIRED, 'Le nom du contrôleur CRUD.'],
-            ['model', null, InputOption::VALUE_REQUIRED, 'Le nom du modèle pour ce CRUD.'],
+            ['model', null, InputOption::VALUE_REQUIRED, 'Crud model name is required'],
         ];
     }
 
     /**
-     * Générez les fichiers nécessaires pour le CRUD.
+     * handle crud generation
+     * @return void
      */
     public function handle()
     {
-        $controller = $this->option('controller');
         $model = $this->option('model');
-        
+
+	    $this->call('make:model', ['name' => $model]);
+
         // Création du contrôleur
-        $this->call('make:controller', [
-            'name' => $controller,
-        ]);
+        $this->call('make:controller', ['name' => $model.'Controller']);
         
         // Générer la migration
         $this->call('make:migration', [
-            'name' => 'create_' . strtolower($model) . '_table',
+            'name' => 'create_' . strtolower($model) . 's_table',
         ]);
-        
-        // Générer les vues
+
         $this->createViews($model);
         
-        // Autres actions ici...
+        $this->updateController($model.'Controller');
     }
 
     /**
-     * Créer les vues associées au CRUD.
+     * Create views.
      *
      * @param string $model
      */
     protected function createViews($model)
     {
-        $viewsPath = resource_path("views/{$model}/");
+        $viewsPath = resource_path("views/".strtolower($model)."s/");
         if (!file_exists($viewsPath)) {
             mkdir($viewsPath, 0755, true);
         }
@@ -76,5 +73,27 @@ class MakeCrudCommand extends GeneratorCommand
         file_put_contents($viewsPath . 'create.blade.php', view('crud::create', ['model' => $model])->render());
         file_put_contents($viewsPath . 'show.blade.php', view('crud::show', ['model' => $model])->render());
     }
+
+	/**
+	 * @param string $controllerName
+	 * @param string $model
+	 */
+	private function updateController(string $controllerName, string $model)
+	{
+		$controllerPath = app_path("Http/Controllers/{$controllerName}.php");
+
+		// Charger le stub du contrôleur
+		$stub = file_get_contents($this->getStub());
+
+		// Remplacer les placeholders par les valeurs dynamiques
+		$controllerContent = str_replace(
+			['{{ $model }}', '{{ $controllerName }}'],
+			[$model, $controllerName],
+			$stub
+		);
+
+		// Créer ou remplacer le fichier du contrôleur
+		File::put($controllerPath, $controllerContent);
+	}
 }
 

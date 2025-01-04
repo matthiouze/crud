@@ -1,6 +1,6 @@
 {
     "name": "matt/crud",
-    "description": "With the php artisan command, create a basic crud with controller, model, view migration etc",
+    "description": "With the php artisan command, create a basic crud structure with controller, model, view migration etc",
     "type": "package",
     "require": {
         "laravel/framework": "10"
