@@ -1,9 +1,11 @@
 {
     "name": "matt/crud",
-    "description": "With the php artisan command, create a basic crud structure with controller, model, view migration etc",
+    "description": "Create a basic crud with php artisan command",
     "type": "package",
+    "license": "MIT",
     "require": {
-        "laravel/framework": "10"
+        "php": ">=8",
+        "laravel/framework": "^10"
     },
     "autoload": {
         "psr-4": {
