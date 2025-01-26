@@ -1,0 +1,13 @@
+use App\Http\Controllers\{{ $controllerName }};
+
+Route::name('{{ $name }}.')
+    ->prefix('{{ $name }}')
+    ->group(function () {
+        Route::get('', [{{ $controllerName }}::class, 'index'])->name('index');
+        Route::get('create', [{{ $controllerName }}::class, 'create'])->name('create');
+        Route::get('{{ $name }}/show', [{{ $controllerName }}::class, 'show'])->name('show');
+        Route::get('{{ $name }}/edit', [{{ $controllerName }}::class, 'edit'])->name('edit');
+        Route::post('store', [{{ $controllerName }}::class, 'store'])->name('store');
+        Route::put('{{ $name }}/update', [{{ $controllerName }}::class, 'update'])->name('update');
+        Route::delete('{{ $name }}/delete', [{{ $controllerName }}::class, 'delete'])->name('delete');
+    });

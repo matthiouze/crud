@@ -1,0 +1,85 @@
+<?php
+
+namespace Tests\Feature;
+
+use Tests\TestCase;
+use App\Models\{{ $model }};
+
+class {{ $model }}Test extends TestCase
+{
+    /**
+     * Test index returns all objects and status OK.
+     */
+    public function test_index_{{ $name }}_returns_all_objects()
+    {
+        // Arrange: Create fake data
+        $models = {{ $model }}::factory()->count(5)->create();
+
+        // Act: Hit the index route
+        $response = $this->get(route('{{ $name }}.index'));
+
+        // Assert
+        $response->assertStatus(200);
+        $response->assertJsonCount(5);
+    }
+
+    /**
+     * Test create page returns status OK and contains the word "Ajouter".
+     */
+    public function test_create_{{ $name }}_returns_status_ok_and_contains_ajouter()
+    {
+        // Act
+        $response = $this->get(route('{{ $name }}.create'));
+
+        // Assert
+        $response->assertStatus(200);
+        $response->assertSee('Ajouter');
+    }
+
+    /**
+     * Test edit page returns status OK and contains the word "Editer".
+     */
+    public function test_edit_{{ $name }}_returns_status_ok_and_contains_editer()
+    {
+        // Arrange: Create a single object
+        $model = {{ $model }}::factory()->create();
+
+        // Act
+        $response = $this->get(route('{{ $name }}.edit', $model));
+
+        // Assert
+        $response->assertStatus(200);
+        $response->assertSee('Editer');
+    }
+
+    /**
+     * Test show page returns status OK.
+     */
+    public function test_show_{{ $name }}_returns_status_ok()
+    {
+        // Arrange
+        $model = {{ $model }}::factory()->create();
+
+        // Act
+        $response = $this->get(route('{{ $name }}.show', $model));
+
+        // Assert
+        $response->assertStatus(200);
+    }
+
+    /**
+     * Test delete functionality removes the object from the database and returns status OK.
+     */
+    public function test_delete_{{ $name }}_removes_object_and_returns_status_ok()
+    {
+        // Arrange
+        $model = {{ $model }}::factory()->create();
+
+        // Act
+        $response = $this->delete(route('{{ $name }}.delete', $model));
+
+        // Assert
+        $response->assertStatus(200);
+        $this->assertDatabaseMissing('{{ $model }}', ['id' => $model->id]);
+    }
+}
